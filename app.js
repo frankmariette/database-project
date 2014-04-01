@@ -42,8 +42,8 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 app.get('/tables', function(req, res) {
-  res.render('tables');
-});
+  res.render('tables'); // dis dont work
+}); 
 
 
 
