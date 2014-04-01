@@ -9,13 +9,17 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 //var less = require('less');
-
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('port', process.env.PORT || 3000);
+//Jade stuff
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+
+require('./setup')(app);
+
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -32,8 +36,24 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+//Start of GET/POST pages
+
+app.get('/', function(req, res) {
+  res.render('index');
+});
+app.get('/tables', function(req, res) {
+  res.render('tables');
+});
+
+
+
+//app.get('/', routes.index); //jade stuff?
 app.get('/users', user.list);
+
+/*
+app.get('*', function(req, res){
+    res.render('404');
+}); */
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
