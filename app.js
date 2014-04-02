@@ -19,7 +19,6 @@ var app = express();
 
 require('./setup')(app);
 
-
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -28,8 +27,10 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
-app.use(require('less-middleware')(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(require('less-middleware')(path.join(__dirname, '/public'))); // setting css to be in public
+app.use(express.static(path.join(__dirname, '/public')));	
+
+//app.use(express.static());
 
 // development only
 if ('development' == app.get('env')) {
@@ -42,13 +43,12 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 app.get('/tables', function(req, res) {
-  res.render('tables'); // dis dont work
+  res.render('tables');
 }); 
 
-
-
-//app.get('/', routes.index); //jade stuff?
-app.get('/users', user.list);
+app.get('/*', function(req, res) {
+  res.render('404'); 
+}); 
 
 /*
 app.get('*', function(req, res){
