@@ -10,7 +10,6 @@ var http = require('http');
 var path = require('path');
 var passport = require('passport');
 //var less = require('less');
-<<<<<<< HEAD
 
 // Database connection. Modify conString for your own local copy
 var pg = require('pg');
@@ -32,8 +31,6 @@ pg.connect(conString, function(err, client, done){
 	});
 });
 
-=======
->>>>>>> 8e1de0cc7ef411c96af804a0b2c93a460f1026c8
 var app = express();
 
 // all environments
@@ -73,7 +70,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-<<<<<<< HEAD
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/login', passport.authenticate('local', {
@@ -81,7 +77,7 @@ app.post('/login', passport.authenticate('local', {
 	failureRedirect: '/login',
 	failureFlash: true})
 );
-=======
+
 //Start of GET/POST pages
 
 app.use(function(req, res, next){
@@ -119,10 +115,6 @@ app.get('/r/:rep', function(req, res) {
 app.get('/tables', function(req, res) {
   res.render('tables');
 }); 
-
-
-
->>>>>>> 8e1de0cc7ef411c96af804a0b2c93a460f1026c8
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
