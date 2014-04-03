@@ -8,7 +8,28 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var passport = require('passport');
 //var less = require('less');
+
+// Database connection. Modify conString for your own local copy
+var pg = require('pg');
+var conString = "postgres://karrde00@localhost/karrde00";
+
+pg.connect(conString, function(err, client, done){
+	if(err){
+		return console.error('error fetching client from pool', err);
+	}
+	client.query('SELECT * FROM political_data.congressmen WHERE mem_id = 1', function(err, result){
+		// calls `done()` to release the client back to the pool
+		done();
+
+		if(err){
+			return console.error('error running query', err);
+		}
+		console.log(result);
+		//output: 1
+	});
+});
 
 var app = express();
 
@@ -34,7 +55,13 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.post('/login', passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/login',
+	failureFlash: true})
+);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
