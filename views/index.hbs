@@ -42,7 +42,7 @@
                     
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="/">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -59,7 +59,7 @@
                 </li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="/">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -157,7 +157,7 @@
                             ['Michigan', 2],
                             ['Minnesota', 2],
                             ['Mississippi', 2],
-                            ['Missouri', 2],
+                            ['Missouri', 10],
                             ['Montana', 2],
                             ['Nebraska', 2],
                             ['Nevada', 2],
@@ -189,15 +189,14 @@
                      ]);
 
                         var options = {
-                            colorAxis: {colors: ['#f5f5f5','#f5f5f5']},
+                            colorAxis: {colors: ['#f5f5f5','#428bca']},
                             legend: 'Visits',
                             region: "US",
                             resolution: 'provinces',
                             backgroundColor:{
-                                        fill: '#428bca', 
-                                        stroke: '#f5f5f5', 
+                                        fill: '#f5f5f5', 
+                                        stroke: '#428bca', 
                                         strokeWidth: 5},
-                            borderColor: '#428bca',
                             width: 750
                         };
 
