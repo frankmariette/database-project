@@ -49,7 +49,7 @@ if ('development' == app.get('env')) {
 }
 
 //Start of GET/POST pages
-/*
+
 app.use(function(req, res, next){
   res.status(404);
   // respond with html page
@@ -58,7 +58,7 @@ app.use(function(req, res, next){
     return;
   }
 });
-*/
+
 
 
 app.get('/', function(req, res) {
@@ -67,16 +67,21 @@ app.get('/', function(req, res) {
 
 app.get('/tables', function(req, res) {
   res.render('tables');
-}); 
+});
 	
+app.get('/search/?q', function(req, res) {
+  var query = req.query.q;
+  res.render('search');
+});
+
 app.get('/r/:rep', function(req, res) {
   /*var info = db.getInfo(req.params.id)
   res.render('r', {
     rep: info
   });*/
-
-  var url = req.url
-  res.render('r', {url:url});
+  var rep = req.params.rep;
+  //var url = req.url
+  res.render('r', {url:rep});
 }); 
 
 app.get('/tables', function(req, res) {
