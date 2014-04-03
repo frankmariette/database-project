@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Political Database</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Page-Level Plugin CSS - Dashboard -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Political Database</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="/">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> No database entries
+                                    <span class="pull-right text-muted small">Mar 24</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="/"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="/"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+        </nav>
+        <!-- /.navbar-static-top -->
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Quick Lookup? Nahhh...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                    </li>
+                    <li>
+                        <a href="/"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                    </li>
+                    <li>
+                        <a href="/tables"><i class="fa fa-table fa-fw"></i> Tables</a>
+                    </li>
+                    <li>
+                        <a href="/test"><i class="fa fa-wrench fa-fw"></i> Developer Link</a>
+                    </li>
+                </ul>
+                <!-- /#side-menu -->
+            </div>
+            <!-- /.sidebar-collapse -->
+        </nav>
+        <!-- /.navbar-static-side -->
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Select a state to get details on its representitives.</p>
+                    
+                    <div id="chart_div"></div>
+                    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                    <script type="text/javascript">
+                      google.load('visualization', '1', {'packages':['geochart']});
+                      google.setOnLoadCallback(drawRegionsMap);
+                      function drawRegionsMap() {
+                        var data = google.visualization.arrayToDataTable([
+                          ['State', 'Reps'],
+                          ['Alabama', 2],
+                            ['Alaska', 2],
+                            ['American Samoa', 2],
+                            ['Arizona', 2],
+                            ['Arkansas', 2],
+                            ['California', 2],
+                            ['Colorado', 2],
+                            ['Connecticut', 2],
+                            ['Delaware', 2],
+                            ['District of Columbia', 2],
+                            ['Florida', 2],
+                            ['Georgia', 2],
+                            ['Guam', 2],
+                            ['Hawaii', 2],
+                            ['Idaho', 2],
+                            ['Illinois', 2],
+                            ['Indiana', 2],
+                            ['Iowa', 2],
+                            ['Kansas', 2],
+                            ['Kentucky', 2],
+                            ['Louisiana', 2],
+                            ['Maine', 2],
+                            ['Maryland', 2],
+                            ['Massachusetts', 2],
+                            ['Michigan', 2],
+                            ['Minnesota', 2],
+                            ['Mississippi', 2],
+                            ['Missouri', 10],
+                            ['Montana', 2],
+                            ['Nebraska', 2],
+                            ['Nevada', 2],
+                            ['New Hampshire', 2],
+                            ['New Jersey', 2],
+                            ['New Mexico', 2],
+                            ['New York', 2],
+                            ['North Carolina', 2],
+                            ['North Dakota', 2],
+                            ['Northern Marianas Islands', 2],
+                            ['Ohio', 2],
+                            ['Oklahoma', 2],
+                            ['Oregon', 2],
+                            ['Pennsylvania', 2],
+                            ['Puerto Rico', 2],
+                            ['Rhode Island', 2],
+                            ['South Carolina', 2],
+                            ['South Dakota', 2],
+                            ['Tennessee', 2],
+                            ['Texas', 2],
+                            ['Utah', 2],
+                            ['Vermont', 2],
+                            ['Virginia', 2],
+                            ['Virgin Islands', 2],
+                            ['Washington', 2],
+                            ['West Virginia', 2],
+                            ['Wisconsin', 2],
+                            ['Wyoming', 2]
+                     ]);
+
+                        var options = {
+                            colorAxis: {colors: ['#f5f5f5','#428bca']},
+                            legend: 'Visits',
+                            region: "US",
+                            resolution: 'provinces',
+                            backgroundColor:{
+                                        fill: '#f5f5f5', 
+                                        stroke: '#428bca', 
+                                        strokeWidth: 5},
+                            width: 750
+                        };
+
+                        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                        
+                        google.visualization.events.addListener(chart, 'select', function() {
+                            var selectionIdx = chart.getSelection()[0].row;
+                            var stateName = data.getValue(selectionIdx, 0);
+                            window.location.replace('r/' + stateName);
+                        });            
+                      }
+                    </script>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+</body>
+
+</html>
