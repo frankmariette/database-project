@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div#page-wrapper
+    div.row
+      div.col-sm-12
+        h1.page-header Dashboard
+    div.row
+      div.col-md-12
+        p Select  a state to get details on its representatives
+        div#chart_div
+          script(type='text/javascript' src='http://www.google.com/jsapi')
+          script(type='text/javascript' src='js/map.js')

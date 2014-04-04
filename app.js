@@ -54,7 +54,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 
 // Use the 'hbs' view engine
-app.set('view engine', 'hbs');	//to use hbs instead of jade (cuz i dont wanna learn jade atm)
+app.set('view engine', 'jade');	//to use hbs instead of jade (cuz i dont wanna learn jade atm)
 
 // Use the express development style logging
 app.use(express.logger('dev'));
@@ -109,7 +109,7 @@ app.get('/r/:rep', function(req, res) {
   });*/
   var rep = req.params.rep;
   //var url = req.url
-  res.render('r', {url:rep});
+  res.render('rep_profile', {url:rep});
 }); 
 
 app.get('/tables', function(req, res) {
