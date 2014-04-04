@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Tables
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | DataTables Advanced Tables
+          // /.panel-heading
+          .panel-body
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th Rendering engine
+                    th Browser
+                    th Platform(s)
+                    th Engine version
+                    th CSS grade
+                tbody
+                  tr.odd.gradeX
+                    td Trident
+                    td Internet Explorer 4.0
+                    td Win 95+
+                    td.center 4
+                    td.center X
+                  tr.even.gradeC
+                    td Trident
+                    td Internet Explorer 5.0
+                    td Win 95+
+                    td.center 5

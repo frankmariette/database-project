@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Tables
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | DataTables Advanced Tables
+          .panel-body
+            .table-responsive
+              script(src='js/plugins/dataTables/jquery.dataTables.js')
+              script(type="text/javascript" src='js/table.js')
+              script(src="js/plugins/dataTables/dataTables.bootstrap.js")
+              table#dataTables-example.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th Rendering engine
+                    th Browser
+                    th Platform(s)
+                    th Engine version
+                    th CSS grade
+                tbody
+                  tr.odd.gradeX
+                    td Trident
+                    td Internet Explorer 4.0
+                    td Win 95+
+                    td.center 4
+                    td.center X
+                  tr.even.gradeC
+                    td Trident
+                    td Internet Explorer 5.0
+                    td Win 95+
+                    td.center 5
