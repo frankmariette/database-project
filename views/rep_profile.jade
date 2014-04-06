@@ -7,24 +7,20 @@ block content
           .col-sm-3
             img.img-responsive(src='https://scontent-a-ord.xx.fbcdn.net/hphotos-frc3/t1.0-9/1982185_10202749676275941_1538783811_n.jpg')
           .col-sm-6
-            table
+            table.table
               tr
-                td= name
+                td Gender: #{rep.gender}
               tr
-                td= param
+                td Birth Date: #{rep.birth_date}
               tr
-                td=  Contact
-            p #{rep}
+                td Religion: #{rep.religion}
+              tr
+                td Party: #{rep.party}
           .col-sm-3
             | Statistics?
       .row
         .col-lg-12
 
-    //
-       Page-Level Plugin Scripts - Tables 
-    script(src='js/plugins/dataTables/jquery.dataTables.js')
-    script(src='js/plugins/dataTables/dataTables.bootstrap.js')
-    //
-       SB Admin Scripts - Include with every page 
-    script(src='js/sb-admin.js')
+
+
 
