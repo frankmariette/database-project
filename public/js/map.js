@@ -79,6 +79,6 @@ google.load('visualization', '1', {'packages':['geochart']});
     google.visualization.events.addListener(chart, 'select', function() {
         var selectionIdx = chart.getSelection()[0].row;
         var stateName = data.getValue(selectionIdx, 0);
-        window.location.replace('r/' + stateName);
+        window.location.replace('rep_profile/' + stateName);
     });            
   }

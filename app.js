@@ -15,6 +15,7 @@ var passport = require('passport');
 var pg = require('pg');
 var conString = "postgres://karrde00@localhost/karrde00";
 
+/*
 pg.connect(conString, function(err, client, done){
 	if(err){
 		return console.error('error fetching client from pool', err);
@@ -30,14 +31,15 @@ pg.connect(conString, function(err, client, done){
 		//output: 1
 	});
 });
+*/
 
 var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 //Jade stuff
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -46,15 +48,15 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static( __dirname + '/public' ));
 
 
 
 // Set the directory to get the views to be /views
-app.set('views', __dirname + '/views');
+//app.set('views', __dirname + '/views');
 
 // Use the 'hbs' view engine
-app.set('view engine', 'jade');	//to use hbs instead of jade (cuz i dont wanna learn jade atm)
+//app.set('view engine', 'jade');	//to use hbs instead of jade (cuz i dont wanna learn jade atm)
 
 // Use the express development style logging
 app.use(express.logger('dev'));
@@ -83,7 +85,7 @@ app.post('/login', passport.authenticate('local', {
 app.use(function(req, res, next){
   res.status(404);
   // respond with html page
-  if (req.accepts('html')) {
+  if (req.accepts('hbs')) {
     res.render('404', { url: req.url });
     return;
   }
@@ -102,14 +104,16 @@ app.get('/search/?q', function(req, res) {
   res.render('search');
 });
 
-app.get('/r/:rep', function(req, res) {
-  /*var info = db.getInfo(req.params.id)
-  res.render('r', {
-    rep: info
-  });*/
-  var rep = req.params.rep;
+app.get('/rep_profile/:rep', function(req, res){
+  pg.connect(conString, function(err, client, done){
+    var query = client.query('SELECT * FROM political_data.congressmen WHERE mem_id = $1', [req.params.rep]);
+    query.on('row', function(row){
+      res.render('rep_profile', {layout : 'layout', rep: row, param: req.params.rep});
+    }); 
+  });
+ 
   //var url = req.url
-  res.render('rep_profile', {url:rep});
+  
 }); 
 
 app.get('/tables', function(req, res) {
@@ -119,4 +123,3 @@ app.get('/tables', function(req, res) {
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
