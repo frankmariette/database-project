@@ -1,9 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "Get-Political",
-=======
   "name": "Get_Political",
->>>>>>> 8e1de0cc7ef411c96af804a0b2c93a460f1026c8
   "version": "0.0.1",
   "private": true,
   "scripts": {
