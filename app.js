@@ -95,6 +95,10 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.get('/state/:state',function(req, res) {
+  
+  res.render('state', {state_name: req.params.state});
+})
 app.get('/tables', function(req, res) {
   res.render('tables');
 });
