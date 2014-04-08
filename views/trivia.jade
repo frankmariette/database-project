@@ -1,0 +1,13 @@
+extends layout
+block content
+	#page-wrapper
+		.row
+			.col-sm-12
+				h1.page-header Trivia!
+		p Please select a trivia query
+			form(action='/trivia' method='get' name ='' )
+				select
+					option Query 1
+					option Query 2
+					option Query 3
+					option Query 4

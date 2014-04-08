@@ -108,6 +108,10 @@ app.get('/search/?q', function(req, res) {
   res.render('search');
 });
 
+app.get('/trivia', function(req, res) {
+  res.render('trivia');
+});
+
 app.get('/rep_profile/:rep', function(req, res){
   pg.connect(conString, function(err, client, done){
     var query = client.query('SELECT * FROM political_data.congressmen WHERE mem_id = $1', [req.params.rep]);
