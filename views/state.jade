@@ -3,4 +3,11 @@ block content
   #page-wrapper
       .row
         .col-sm-12
-          h1.page-header #{state_name}
+          h1.page-header #{state_name} | #{state_code}
+        .col-sm-6
+        div#repNames
+            table.table
+            - for (i in reps){
+              tr
+                td #{i.f_name} #{i.l_name}
+            - }
