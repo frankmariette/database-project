@@ -97,18 +97,31 @@ app.get('/', function(req, res) {
 
 //Working on sending data to state page checkout state.jade
 app.get('/state/:state',function(req, res) {
-  state_code = state_name_to_code[req.params.state];
-  pg.connect(conString, function(err, client, done){
-    var query = client.query('SELECT * FROM political_data.congressmen JOIN political_data.house_term USING (gov_track_id) WHERE state_code = $1 AND session = $2',[state_code,113]);
-    query.on('row', function(row,result){
-    	result.addRow(row);
+	state_code = state_name_to_code[req.params.state];
+  pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * FROM political_data.congressmen JOIN political_data.house_term USING (gov_track_id) WHERE state_code = $1 AND session = $2',[state_code,113], function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+
+    if(err) {
+      return console.error('error running query', err);
+    }
+    rep_result = result;
+      client.query('SELECT * FROM political_data.congressmen JOIN political_data.senate_term USING (gov_track_id) WHERE state_code = $1 AND session = $2',[state_code,113], function(err, result) {
+      //call `done()` to release the client back to the pool
+      done();
+      if(err) {
+        return console.error('error running query', err);
+      }
+      sen_result = result;
+      res.render('state', {reps: rep_result, sens: sen_result, state_name: req.params.state, state_code: state_code});
     });
-    query.on("end", function (result) {
-      res.render('state', {state_name: req.params.state, state_code: state_code, reps: result});
-    client.end();
-    });
-  });     
-})
+  });
+});    
+});
 
 
 app.get('/tables', function(req, res) {
