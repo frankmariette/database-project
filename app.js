@@ -145,10 +145,32 @@ app.get('/committees/', function(req,res){
     if(err) {
       return console.error('error running query', err);
     }
-    res.render('committees',{committees: result});
+    res.render('committees',{title: 'Committees', committees: result});
   });
 }); 
 });
+
+//Route for sub committess
+app.get('/committees/:comm_id', function(req,res){
+  pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('select * from political_data.congressional_sub_committees where parent_committee_id =$1',[req.params.comm_id], function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+    if(err) {
+      return console.error('error running query', err);
+    }
+    res.render('sub_committees',{title: 'Sub Committees', committees: result});
+  });
+}); 
+
+});
+
+
+
+
 app.get('/trivia/:query_num', function(req, res) {
   var query;
   switch(req.params.query_num)
