@@ -133,8 +133,50 @@ app.get('/search/?q', function(req, res) {
   res.render('search');
 });
 
-app.get('/trivia', function(req, res) {
-  res.render('trivia');
+//ROute for committees page
+app.get('/committees/', function(req,res){
+  pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * from political_data.congressional_committees', function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+    if(err) {
+      return console.error('error running query', err);
+    }
+    res.render('committees',{committees: result});
+  });
+}); 
+});
+app.get('/trivia/:query_num', function(req, res) {
+  var query;
+  switch(req.params.query_num)
+  {
+    case 0:
+      query = null;
+      break;
+    case 1:
+      query = "SELECT f_name, l_name, birth_date FROM congressmen ORDER BY birth_date DESC LIMIT 1"
+      break;
+  }
+  if(query == null)
+  {
+    res.render('trivia');
+  }
+  /* pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query(query, function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+    if(err) {
+      return console.error('error running query', err);
+    }
+    res.render('trivia')
+  });
+}); */
 });
 
 app.get('/rep_profile/:rep', function(req, res){
