@@ -169,7 +169,7 @@ app.get('/committees/:comm_id', function(req,res){
 });
 
 //route for sub committe members
-app.get('/committees/:comm_id/sub_comm_id', function(req,res){
+app.get('/committees/:comm_id/:sub_comm_id', function(req,res){
   pg.connect(conString, function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
@@ -180,7 +180,7 @@ app.get('/committees/:comm_id/sub_comm_id', function(req,res){
     if(err) {
       return console.error('error running query', err);
     }
-    res.render('sub_committees_mambers',{title: 'Sub Committee Members', members: result});
+    res.render('sub_committee_members',{title: 'Sub Committee Members', members: result});
   });
 }); 
 });
