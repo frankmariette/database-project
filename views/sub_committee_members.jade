@@ -10,8 +10,8 @@ block content
           thead
             tr: th #{title}
               tbody
-              - for(var i=0; i<committees.rows.length;i++){
+              - for(var i=0; i<members.rows.length;i++){
                 tr
                   td
-                    a(href='/committees/' + committees.rows[i].sub_cmte_id) #{committees.rows[i].sub_cmte_name}
+                    a(href='/rep_profile/' + members.rows[i].mem_id) #{members.rows[i].f_name}
             - }
