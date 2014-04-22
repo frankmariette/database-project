@@ -5,11 +5,16 @@ block content
         .col-sm-12
           h1.page-header #{rep.f_name} #{rep.l_name}
           .col-sm-3
-            img.img-responsive(src='https://scontent-a-ord.xx.fbcdn.net/hphotos-frc3/t1.0-9/1982185_10202749676275941_1538783811_n.jpg')
+            img.img-responsive(src='http://www.corporatetraveller.ca/assets/images/profile-placeholder.gif')
           .col-sm-6
             table.table
               tr
-                td Gender: #{rep.gender}
+              -if(rep.gender == 'M')
+                td Gender: Male
+              -else if(rep.gender == 'F')
+                td Gender: Female
+              -else
+                td Gender: Unknown
               tr
                 td Birth Date: #{rep.birth_date}
               tr

@@ -6,6 +6,9 @@ block content
       div.col-sm-12
         h1.page-header #{title}
       .col-sm-6
+      -if(committees.rows.length == 0)
+        p No Subcommittees available
+      -else{
         table.table
           thead
             tr: th #{title}
@@ -15,3 +18,4 @@ block content
                   td
                     a(href='/committees/'+ committees.rows[i].parent_committee_id + "/"+ committees.rows[i].sub_cmte_id) #{committees.rows[i].sub_cmte_name}
             - }
+        -}
