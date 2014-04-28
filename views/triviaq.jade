@@ -18,14 +18,35 @@ block content
         a(href="/trivia/5") Religion Disbursement
       li
         a(href="/trivia/6") Political Party Spread
+      li
+        a(href="/trivia/7") Number of House representatives per session
+      li
+        a(href="/trivia/8") Senators per session
+      li
+        a(href="/trivia/9") Total funding from individuals
+      li
+        a(href="/trivia/10") Political Party Spread
 
       -console.log("trivia: %j", trivia)
-      span#results
-        table.table(style="float: left;")
+      div.container(style="margin-top:50px;")
+        table.table
           thead
-            tr: th Results
-              tbody
-              - for(var i=0; i<trivia.rows.length;i++){
-                tr
-                  td #{trivia.rows[i].f_name} #{trivia.rows[i].l_name} #{trivia.rows[i].birth_date}
-              - }
+            tr 
+             -for (prop in trivia.rows[0]){
+                -if (!trivia.rows[0].hasOwnProperty(prop)) {
+                  -continue;
+                -}
+                th #{prop}
+              -}      
+          tbody
+            -for(var i=0; i<trivia.rows.length; i++){
+              tr
+              -for (prop in trivia.rows[i]){
+                -if (!trivia.rows[i].hasOwnProperty(prop)) {
+                  -continue;
+                -}
+              td #{trivia.rows[i][prop]}
+            -}
+          -}
+
+          

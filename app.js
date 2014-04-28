@@ -187,7 +187,7 @@ app.get('/committees/:comm_id/:sub_comm_id', function(req,res){
 
 
 app.get('/trivia', function(req, res){
-  res.render('trivia');
+  res.render('trivia', {trivia: null});
 })
 
 
@@ -201,7 +201,7 @@ app.get('/trivia/:choice', function(req, res) {
       query = null;
       break;
     case '1': //youngest congressmen
-      query = "SELECT f_name, l_name, birth_date, mem_id FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
+      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
       break;
     case '2': // oldest congressmen
       query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
@@ -225,7 +225,7 @@ app.get('/trivia/:choice', function(req, res) {
       query = "SELECT session, COUNT(session) AS num_session FROM political_data.senate_term GROUP BY session ORDER BY session DESC";
       break;
     case '9': //total funding from individuals
-      query = "SELECT SUM(transaction_amt) FROM political_data.funding_contributions_by_individuals";
+      query = "SELECT SUM(transaction_amt) AS total FROM political_data.funding_contributions_by_individuals";
       break;
     case '10': // Candidate funding
       query = "SELECT cand_name FROM political_data.funding_candidate WHERE cand_pty_affiliation = 'DEM'";
