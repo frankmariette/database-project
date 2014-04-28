@@ -186,36 +186,79 @@ app.get('/committees/:comm_id/:sub_comm_id', function(req,res){
 });
 
 
+app.get('/trivia', function(req, res){
+  res.render('trivia');
+})
 
 
-app.get('/trivia/:query_num', function(req, res) {
+app.get('/trivia/:choice', function(req, res) {
+  var choice = req.params.choice;
+  console.log("choice = " + choice);
   var query;
-  switch(req.params.query_num)
+  switch(choice)
   {
     case 0:
       query = null;
       break;
-    case 1:
-      query = "SELECT f_name, l_name, birth_date FROM congressmen ORDER BY birth_date DESC LIMIT 1"
+    case '1': //youngest congressmen
+      query = "SELECT f_name, l_name, birth_date, mem_id FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
+      break;
+    case '2': // oldest congressmen
+      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
+      break;
+    case '3': //list of congressmen under 40
+      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
+      break;
+    case '4': // does not have children?
+      query = "SELECT f_name, l_name FROM political_data.congressmen WHERE has_child = 'f' ORDER BY birth_date ASC";
+      break;
+    case '5': // Party disbursement
+      query = "SELECT religion, COUNT(religion) AS religion_count FROM political_data.congressmen GROUP BY religion ORDER BY religion_count DESC";
+      break;
+    case '6': // amount in each party
+      query = "SELECT party, COUNT(party) AS party_count FROM political_data.congressmen GROUP BY party";
+      break;
+    case '7': //number in each session for house
+      query = "SELECT session, COUNT(session) AS num_session FROM political_data.house_term GROUP BY session ORDER BY session DESC";
+      break;
+    case '8':// number in each session for senate
+      query = "SELECT session, COUNT(session) AS num_session FROM political_data.senate_term GROUP BY session ORDER BY session DESC";
+      break;
+    case '9': //total funding from individuals
+      query = "SELECT SUM(transaction_amt) FROM political_data.funding_contributions_by_individuals";
+      break;
+    case '10': // Candidate funding
+      query = "SELECT cand_name FROM political_data.funding_candidate WHERE cand_pty_affiliation = 'DEM'";
       break;
   }
-  if(query == null)
-  {
+  console.log(query);
+  if(query == null){
     res.render('trivia');
+  } 
+  else  {
+     pg.connect(conString, function(err, client, done) {
+      
+        if(err) {
+          return console.error('error fetching client from pool', err);
+        }
+        query = client.query(query);
+        client.query(query, function(err, result) {
+          query.on('row', function(row){
+              //console.log(row);
+             res.render('triviaq', {trivia: row});
+          })
+            //call `done()` to release the client back to the pool
+            done();
+            if(err) {
+              return console.error('error running query', err);
+            }
+        });
+      }); 
   }
-  /* pg.connect(conString, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query(query, function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
-    if(err) {
-      return console.error('error running query', err);
-    }
-    res.render('trivia')
-  });
-}); */
+});
+
+app.get('/random', function(req, res){
+  res.send('Whee!')
 });
 
 app.get('/rep_profile/:rep', function(req, res){

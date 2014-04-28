@@ -1,0 +1,32 @@
+extends layout
+block content
+  #page-wrapper
+    .row
+      .col-sm-12
+        h1.page-header Trivia!
+    p Please select a trivia query
+    ul
+      li
+        a(href="/trivia/1") Youngest Congressmen
+      li
+        a(href="/trivia/2") Oldest Congressmen
+      li
+        a(href="/trivia/3") List of Congressmen under 40
+      li
+        a(href="/trivia/4") Congressmen without children
+      li
+        a(href="/trivia/5") Religion Disbursement
+      li
+        a(href="/trivia/6") Political Party Spread
+
+      div #{trivia.f_name} #{trivia.l_name} #{trivia.birth_date} #{trivia.length}
+      span#results
+        table.table(style="float: left;")
+          thead
+            tr: th Results
+              tbody
+              - for(var i=0; i<1;i++){
+                tr
+                  td 
+                    a(href='/rep_profile/' + trivia.rows[i].mem_id) #{trivia.rows[i].f_name} #{trivia.rows[i].l_name} #{trivia.rows[i].birth_date}
+              - }
