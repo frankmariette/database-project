@@ -30,5 +30,36 @@ SELECT session, COUNT(session) AS num_session FROM senate_term GROUP BY session 
 --total funding from individuals
 SELECT SUM(transaction_amt) FROM funding_contributions_by_individuals;
 
---candidate funding?
-SELECT cand_name FROM funding_candidate WHERE cand_pty_affiliation = 'DEM';
+
+
+--funding queries
+
+--dem funding
+SELECT SUM(transaction_amt) AS amount FROM funding_contributions_to_candidates_by_committees 
+INNER JOIN funding_candidate ON funding_contributions_to_candidates_by_committees.cand_id= funding_candidate.cand_id
+WHERE cand_pty_affiliation = 'DEM';
+
+--repub funding
+SELECT SUM(transaction_amt) AS amount FROM funding_contributions_to_candidates_by_committees 
+INNER JOIN funding_candidate ON funding_contributions_to_candidates_by_committees.cand_id= funding_candidate.cand_id
+WHERE cand_pty_affiliation = 'REP';
+
+--ind funding
+SELECT SUM(transaction_amt) AS amount FROM funding_contributions_to_candidates_by_committees 
+INNER JOIN funding_candidate ON funding_contributions_to_candidates_by_committees.cand_id= funding_candidate.cand_id
+WHERE cand_pty_affiliation = 'IND';
+
+
+
+--match up congressmen and funding_candidate
+SELECT l_name FROM congressmen INNER JOIN funding_candidate ON congressmen.fec_id = funding_candidate.cand_id 
+WHERE congressmen.fec_id = 'H6HI01121';
+
+--winning amt? for all winners
+SELECT SUM(transaction_amt) AS winning_amt FROM funding_contributions_to_candidates_by_committees
+INNER JOIN congressmen ON funding_contributions_to_candidates_by_committees.cand_id = congressmen.fec_id;
+
+--elected winning amount spent on campaign
+--SELECT SUM(transaction_amt) AS winning_amt FROM 
+--(funding_contributions_to_candidates_by_committees INNER JOIN funding_candidate 
+--ON funding_contributions_to_candidates_by_committees.cand_id 
