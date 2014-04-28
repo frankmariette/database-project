@@ -19,14 +19,13 @@ block content
       li
         a(href="/trivia/6") Political Party Spread
 
-      div #{trivia.f_name} #{trivia.l_name} #{trivia.birth_date} #{trivia.length}
+      -console.log("trivia: %j", trivia)
       span#results
         table.table(style="float: left;")
           thead
             tr: th Results
               tbody
-              - for(var i=0; i<1;i++){
+              - for(var i=0; i<trivia.rows.length;i++){
                 tr
-                  td 
-                    a(href='/rep_profile/' + trivia.rows[i].mem_id) #{trivia.rows[i].f_name} #{trivia.rows[i].l_name} #{trivia.rows[i].birth_date}
+                  td #{trivia.rows[i].f_name} #{trivia.rows[i].l_name} #{trivia.rows[i].birth_date}
               - }

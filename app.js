@@ -231,22 +231,22 @@ app.get('/trivia/:choice', function(req, res) {
       query = "SELECT cand_name FROM political_data.funding_candidate WHERE cand_pty_affiliation = 'DEM'";
       break;
   }
-  console.log(query);
+  //console.log(query);
   if(query == null){
     res.render('trivia');
   } 
   else  {
      pg.connect(conString, function(err, client, done) {
-      
         if(err) {
           return console.error('error fetching client from pool', err);
         }
-        query = client.query(query);
+        //query = client.query(query);
+        console.log(query);
         client.query(query, function(err, result) {
-          query.on('row', function(row){
+          //query.on('row', function(row){
               //console.log(row);
-             res.render('triviaq', {trivia: row});
-          })
+             res.render('triviaq', {trivia: result});
+          //})
             //call `done()` to release the client back to the pool
             done();
             if(err) {
