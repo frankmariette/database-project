@@ -13,7 +13,7 @@ var passport = require('passport');
 
 // Database connection. Modify conString for your own local copy
 var pg = require('pg');
-var conString = "";
+var conString = "postgres://nate:51147C0le@localhost:5432/nate";
 
 
 pg.connect(conString, function(err, client, done){
