@@ -24,12 +24,10 @@ block content
         a(href="/trivia/8") Senators per session
       li
         a(href="/trivia/9") Total funding from individuals
-      li
-        a(href="/trivia/10") Political Party Spread
 
       -console.log("trivia: %j", trivia)
       div.container(style="margin-top:50px;")
-        table.table
+        table.table.table-hover.table-responsive
           thead
             tr 
              -for (prop in trivia.rows[0]){

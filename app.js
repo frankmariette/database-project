@@ -27,7 +27,7 @@ pg.connect(conString, function(err, client, done){
 		if(err){
 			return console.error('error running query', err);
 		}
-		console.log(result);
+		//console.log(result);
 		//output: 1
 	});
 });
@@ -123,17 +123,23 @@ app.get('/state/:state',function(req, res) {
 });    
 });
 
-
-app.get('/tables', function(req, res) {
-  res.render('tables');
+app.get('/searching', function(req, res) {
+  var lname = req.query.search;
+  console.log(lname);
+  pg.connect(conString, function(err, client, done){
+    if(err){
+      return console.error('error fetching client from pool', err);
+    }
+    query = 'SELECT f_name, l_name, mem_id FROM political_data.congressmen WHERE l_name ILIKE $1 ORDER BY f_name';
+    console.log(query);
+    client.query(query,[lname+'%'], function(err, results){
+      console.log(results);
+      res.render('search', {search: results});
+    })
+  })
 });
-	
-app.get('/search/?q', function(req, res) {
-  var query = req.query.q;
-  res.render('search');
-});
 
-//ROute for committees page
+//Route for committees page
 app.get('/committees/', function(req,res){
   pg.connect(conString, function(err, client, done) {
   if(err) {

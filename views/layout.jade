@@ -24,6 +24,7 @@ html
     // Page-Level Plugin Scripts - Tables 
     script(src='/js/plugins/dataTables/jquery.dataTables.js')
     script(src='/js/plugins/dataTables/dataTables.bootstrap.js')
+    script(src='/js/main.js')
   body
     #wrapper
       nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bottom: 0;')
@@ -35,41 +36,41 @@ html
             span.icon-bar
           a.navbar-brand(href='/') Political Database
         //.navbar-header 
-        ul.nav.navbar-top-links.navbar-right
-          //.dropdown 
-          li.dropdown
-            //.dropdown 
-            li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#')
-                i.fa.fa-bell.fa-fw
-                i.fa.fa-caret-down
-              ul.dropdown-menu.dropdown-alerts
-                li
-                  a(href='#')
-                    div
-                      i.fa.fa-comment.fa-fw
-                      | No database entries
-                      span.pull-right.text-muted.small Mar 24
-              //.dropdown-alerts 
-            //.dropdown 
-            li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#')
-                i.fa.fa-user.fa-fw
-                i.fa.fa-caret-down
-              ul.dropdown-menu.dropdown-user
-                li
-                  a(href='#')
-                    i.fa.fa-user.fa-fw
-                    | User Profile
-                li
-                  a(href='#')
-                    i.fa.fa-gear.fa-fw
-                    | Settings
-                li.divider
-                li
-                  a(href='login.html')
-                    i.fa.fa-sign-out.fa-fw
-                    | Logout
+        //- ul.nav.navbar-top-links.navbar-right
+        //-   //.dropdown 
+        //-   li.dropdown
+        //-     //.dropdown 
+        //-     li.dropdown
+        //-       a.dropdown-toggle(data-toggle='dropdown', href='#')
+        //-         i.fa.fa-bell.fa-fw
+        //-         i.fa.fa-caret-down
+        //-       ul.dropdown-menu.dropdown-alerts
+        //-         li
+        //-           a(href='#')
+        //-             div
+        //-               i.fa.fa-comment.fa-fw
+        //-               | No database entries
+        //-               span.pull-right.text-muted.small Mar 24
+        //-       //.dropdown-alerts 
+        //-     //.dropdown 
+            //- li.dropdown
+            //-   a.dropdown-toggle(data-toggle='dropdown', href='#')
+            //-     i.fa.fa-user.fa-fw
+            //-     i.fa.fa-caret-down
+            //-   ul.dropdown-menu.dropdown-user
+            //-     li
+            //-       a(href='#')
+            //-         i.fa.fa-user.fa-fw
+            //-         | User Profile
+            //-     li
+            //-       a(href='#')
+            //-         i.fa.fa-gear.fa-fw
+            //-         | Settings
+            //-     li.divider
+            //-     li
+            //-       a(href='login.html')
+            //-         i.fa.fa-sign-out.fa-fw
+            //-         | Logout
               //.dropdown-user 
             //.dropdown 
         //.navbar-top-links 
@@ -79,19 +80,16 @@ html
           ul#side-menu.nav
             li.sidebar-search
               .input-group.custom-search-form
-                input.form-control(type='text', placeholder='Quick Lookup? Nahhh...')
-                span.input-group-btn
-                  button.btn.btn-default(type='button')
-                    i.fa.fa-search
+              form(action="/searching" method="get")
+                input.form-control#search.clearfix(type='text', name="search", placeholder="Candidate's last name...")
+                //- span.input-group-btn
+                //-   button.btn.btn-default(type='button' onclick="/searching")
+                //-     i.fa.fa-search
               //input-group 
             li
               a(href='/')
                 i.fa.fa-dashboard.fa-fw
-                | Home
-            li
-              a(href='/tables.html')
-                i.fa.fa-table.fa-fw
-                | Tables
+                | Home / Map
             li
               a(href='/trivia')
                 i.fa.fa-list.fa-fw
