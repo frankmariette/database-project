@@ -95,7 +95,7 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-//Working on sending data to state page checkout state.jade
+//Sends data to state page
 app.get('/state/:state',function(req, res) {
 	state_code = state_name_to_code[req.params.state];
   pg.connect(conString, function(err, client, done) {
@@ -105,7 +105,6 @@ app.get('/state/:state',function(req, res) {
   client.query('SELECT * FROM political_data.congressmen JOIN political_data.house_term USING (gov_track_id) WHERE state_code = $1 AND session = $2',[state_code,113], function(err, result) {
     //call `done()` to release the client back to the pool
     done();
-
     if(err) {
       return console.error('error running query', err);
     }
@@ -234,7 +233,7 @@ app.get('/trivia/:choice', function(req, res) {
       query = "SELECT SUM(transaction_amt) AS total FROM political_data.funding_contributions_by_individuals";
       break;
     case '10': // Candidate funding
-      query = "SELECT cand_name FROM political_data.funding_candidate WHERE cand_pty_affiliation = 'DEM'";
+      query = "select name, occupation, transaction_amt AS amount_spent from funding_contributions_by_individuals  order by amount_spent desc limit 10;";
       break;
   }
   //console.log(query);
