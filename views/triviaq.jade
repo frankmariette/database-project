@@ -29,22 +29,22 @@ block content
       div.container(style="margin-top:50px;")
         table.table.table-hover.table-responsive
           thead
-            tr 
-             -for (prop in trivia.rows[0]){
-                -if (!trivia.rows[0].hasOwnProperty(prop)) {
-                  -continue;
-                -}
-                th #{prop}
-              -}      
+            tr
+            -for (prop in trivia.rows[0]) {
+              -if (!trivia.rows[0].hasOwnProperty(prop)) {
+                //The current property is not a direct property of p
+                -continue;
+              -}
+              th #{prop}
+            -}
           tbody
-            -for(var i=0; i<trivia.rows.length; i++){
-              tr
-              -for (prop in trivia.rows[i]){
-                -if (!trivia.rows[i].hasOwnProperty(prop)) {
-                  -continue;
-                -}
+          -for(var i=0; i<trivia.rows.length;i++){
+            tr
+            -for (prop in trivia.rows[i]) {
+              -if (!trivia.rows[i].hasOwnProperty(prop)) {
+                //The current property is not a direct property of p
+                -continue;
+              -}
               td #{trivia.rows[i][prop]}
             -}
           -}
-
-          
