@@ -129,7 +129,7 @@ app.get('/searching', function(req, res) {
     if(err){
       return console.error('error fetching client from pool', err);
     }
-    query = 'SELECT f_name, l_name, mem_id FROM political_data.congressmen WHERE l_name ILIKE $1 ORDER BY f_name';
+    query = 'SELECT f_name, l_name, mem_id FROM political_data.congressmen WHERE l_name ILIKE $1 ORDER BY l_name';
     console.log(query);
     client.query(query,[lname+'%'], function(err, results){
       console.log(results);
