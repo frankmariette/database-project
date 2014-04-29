@@ -179,7 +179,7 @@ app.get('/committees/:comm_id/:sub_comm_id', function(req,res){
   if(err) {
     return console.error('error fetching client from pool', err);
   }
-  client.query('SELECT * FROM political_data.congressmen_in_committee  JOIN political_data.congressmen USING(gov_track_id) WHERE sub_committee_id = $1 AND parent_committee_id = $2 AND session_number = 113',[req.params.sub_comm_id,req.params.comm_id], function(err, result) {
+  client.query('SELECT * FROM political_data.congressmen_in_committee  JOIN political_data.congressmen USING(gov_track_id) WHERE sub_committee_id = $1 AND parent_committee_id = $2',[req.params.sub_comm_id,req.params.comm_id], function(err, result) {
     //call `done()` to release the client back to the pool
     done();
     if(err) {
