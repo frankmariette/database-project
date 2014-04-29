@@ -206,13 +206,13 @@ app.get('/trivia/:choice', function(req, res) {
       query = null;
       break;
     case '1': //youngest congressmen
-      query = "SELECT _name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
       break;
     case '2': // oldest congressmen
-      query = "SELECT _name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
       break;
     case '3': //list of congressmen under 40
-      query = "SELECT _name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
       break;
     case '4': // does not have children?
       query = "SELECT f_name as First_Name, l_name AS last_name FROM political_data.congressmen WHERE has_child = 'f' ORDER BY birth_date ASC";
