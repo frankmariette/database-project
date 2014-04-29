@@ -5,7 +5,7 @@ block content
         .col-sm-12
           h1.page-header #{rep.f_name} #{rep.l_name}
           .col-sm-3
-            img.img-responsive(src='http://www.corporatetraveller.ca/assets/images/profile-placeholder.gif')
+            img.img-responsive(src='http://www.govtrack.us/data/photos/'+ rep.gov_track_id +'.jpeg')
           .col-sm-6
             table.table
               tr
@@ -18,13 +18,23 @@ block content
               tr
                 td Birth Date: #{rep.birth_date}
               tr
+              -if(rep.religion==null)
+                td Religion: Unknown
+              -else
                 td Religion: #{rep.religion}
               tr
                 td Party: #{rep.party}
-          .col-sm-3
-            | Statistics?
-      .row
-        .col-lg-12
+              tr
+              -if(rep.married)
+                td Married: Yes
+              -else
+                td Married: No
+              tr
+              -if(rep.has_child)
+                td Has Children: Yes
+              -else
+                td Has Children: No
+
 
 
 
