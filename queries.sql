@@ -37,7 +37,6 @@ SELECT cand_name FROM funding_candidate WHERE cand_pty_affiliation = 'DEM';
 SELECT first_name, last_name, mem_id FROM politcal_party.congressmen WHERE l_name ILIKE $1 ORDER BY f_name;
 
 
-
 --funding queries
 
 --dem funding
@@ -70,3 +69,10 @@ INNER JOIN congressmen ON funding_contributions_to_candidates_by_committees.cand
 --(funding_contributions_to_candidates_by_committees INNER JOIN funding_candidate 
 --ON funding_contributions_to_candidates_by_committees.cand_id 
 
+--Erics queries
+--Query shows the number of congressmen in each committee (parent) from each state
+WITH joined_congress AS(SELECT * FROM (SELECT gov_track_id AS gid, state_code, session FROM senate_term UNION SELECT gov_track_id AS gid, state_code, session FROM house_term) AS terms, congressmen WHERE terms.gid = congressmen.gov_track_id AND terms.session = 113)SELECT congressional_committees.committee_name, parent_committee_id, state_code, count(*)  FROM joined_congress, congressional_committees, congressmen_in_committee WHERE congressmen_in_committee.gov_track_id = joined_congress.gid AND congressmen_in_committee.session_number = 113 AND sub_committee_id = -1 AND congressional_committees.cong_cmte_id = parent_committee_id GROUP BY parent_committee_id, joined_congress.state_code, congressional_committees.committee_name ORDER BY parent_committee_id;
+
+
+--Amount of money each state contributed to political campaigns during the last 4 years (from today)
+SELECT totals.s1, totals.state FROM (SELECT sum(transaction_amt)::numeric::money AS s1, state FROM funding_contributions_to_candidates_by_committees WHERE state IS NOT NULL  AND transaction_tp != '20Y' AND transaction_tp != '22Y' AND transaction_tp != '24T' AND transaction_dt >= '04/30/2010'  GROUP BY state ORDER BY state) AS totals ORDER BY totals.s1 DESC;
