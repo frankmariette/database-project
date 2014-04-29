@@ -37,7 +37,6 @@ SELECT cand_name FROM funding_candidate WHERE cand_pty_affiliation = 'DEM';
 SELECT first_name, last_name, mem_id FROM politcal_party.congressmen WHERE l_name ILIKE $1 ORDER BY f_name;
 
 
-
 --funding queries
 
 --dem funding
