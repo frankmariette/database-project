@@ -13,7 +13,7 @@ var passport = require('passport');
 
 // Database connection. Modify conString for your own local copy
 var pg = require('pg');
-var conString = "postgres://karrde00@localhost/karrde00";
+var conString = "";
 
 
 pg.connect(conString, function(err, client, done){
@@ -179,7 +179,7 @@ app.get('/committees/:comm_id/:sub_comm_id', function(req,res){
   if(err) {
     return console.error('error fetching client from pool', err);
   }
-  client.query('SELECT * FROM political_data.congressmen_in_committee  JOIN political_data.congressmen USING(gov_track_id) WHERE sub_committee_id = $1 AND parent_committee_id = $2 AND session_number = 113',[req.params.sub_comm_id,req.params.comm_id], function(err, result) {
+  client.query('SELECT * FROM political_data.congressmen_in_committee  JOIN political_data.congressmen USING(gov_track_id) WHERE sub_committee_id = $1 AND parent_committee_id = $2',[req.params.sub_comm_id,req.params.comm_id], function(err, result) {
     //call `done()` to release the client back to the pool
     done();
     if(err) {
@@ -206,16 +206,16 @@ app.get('/trivia/:choice', function(req, res) {
       query = null;
       break;
     case '1': //youngest congressmen
-      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
       break;
     case '2': // oldest congressmen
-      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
       break;
     case '3': //list of congressmen under 40
-      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
+      query = "SELECT f_name as First_Name, l_name AS last_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
       break;
     case '4': // does not have children?
-      query = "SELECT f_name, l_name FROM political_data.congressmen WHERE has_child = 'f' ORDER BY birth_date ASC";
+      query = "SELECT f_name as First_Name, l_name AS last_name FROM political_data.congressmen WHERE has_child = 'f' ORDER BY birth_date ASC";
       break;
     case '5': // Party disbursement
       query = "SELECT religion, COUNT(religion) AS religion_count FROM political_data.congressmen GROUP BY religion ORDER BY religion_count DESC";
