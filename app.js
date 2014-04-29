@@ -13,7 +13,7 @@ var passport = require('passport');
 
 // Database connection. Modify conString for your own local copy
 var pg = require('pg');
-var conString = "postgres://nate:51147C0le@localhost:5432/nate";
+var conString = "postgres://karrde00@localhost/karrde00";
 
 
 pg.connect(conString, function(err, client, done){
@@ -206,13 +206,13 @@ app.get('/trivia/:choice', function(req, res) {
       query = null;
       break;
     case '1': //youngest congressmen
-      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
+      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date DESC LIMIT 1";
       break;
     case '2': // oldest congressmen
-      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
+      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen ORDER BY birth_date ASC LIMIT 1";
       break;
     case '3': //list of congressmen under 40
-      query = "SELECT f_name, l_name, birth_date FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
+      query = "SELECT f_name, l_name, to_char(birth_date, 'DD Mon YYYY') AS Birthday FROM political_data.congressmen WHERE birth_date > '1974-04-14' ORDER BY birth_date ASC";
       break;
     case '4': // does not have children?
       query = "SELECT f_name, l_name FROM political_data.congressmen WHERE has_child = 'f' ORDER BY birth_date ASC";
@@ -230,10 +230,10 @@ app.get('/trivia/:choice', function(req, res) {
       query = "SELECT session, COUNT(session) AS num_session FROM political_data.senate_term GROUP BY session ORDER BY session DESC";
       break;
     case '9': //total funding from individuals
-      query = "SELECT SUM(transaction_amt) AS total FROM political_data.funding_contributions_by_individuals";
+      query = "SELECT SUM(transaction_amt)::numeric::money AS total FROM political_data.funding_contributions_by_individuals";
       break;
     case '10': // Candidate funding
-      query = "select name, occupation, transaction_amt AS amount_spent from funding_contributions_by_individuals  order by amount_spent desc limit 10;";
+      query = "select name, occupation, transaction_amt::numeric::money AS amount_spent FROM political_data.funding_contributions_by_individuals  order by amount_spent desc limit 10;";
       break;
   }
   //console.log(query);
@@ -268,7 +268,7 @@ app.get('/random', function(req, res){
 
 app.get('/rep_profile/:rep', function(req, res){
   pg.connect(conString, function(err, client, done){
-    var query = client.query('SELECT * FROM political_data.congressmen WHERE mem_id = $1', [req.params.rep]);
+    var query = client.query("SELECT f_name, l_name, gov_track_id, gender, religion , party, married, has_child, to_char(birth_date, 'DD Mon YYYY') AS birthday FROM political_data.congressmen WHERE mem_id = $1", [req.params.rep]);
     query.on('row', function(row){
       res.render('rep_profile', {layout : 'layout', rep: row, param: req.params.rep});
     }); 
