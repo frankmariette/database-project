@@ -241,6 +241,9 @@ app.get('/trivia/:choice', function(req, res) {
     case '12': //Last four years of contributions by state
       query = "SELECT totals.s1 AS total_contributions, totals.state FROM (SELECT sum(transaction_amt)::numeric::money AS s1, state FROM political_data.funding_contributions_to_candidates_by_committees WHERE state IS NOT NULL  AND transaction_tp != '20Y' AND transaction_tp != '22Y' AND transaction_tp != '24T' AND transaction_dt >= '04/30/2010'  GROUP BY state ORDER BY state) AS totals ORDER BY totals.s1 DESC";
       break;
+    case '13':
+      query = "SELECT round(totals.s1::numeric/political_data.state_conts.s1::numeric, 4) * 100 AS percent_on_losers, totals.state  FROM (SELECT sum(transaction_amt)::numeric::money AS s1, state FROM political_data.funding_contributions_to_candidates_by_committees WHERE cand_id NOT IN( SELECT fec_id FROM political_data.congressmen WHERE fec_id IS NOT NULL  )AND state IS NOT NULL  AND transaction_tp != '20Y' AND transaction_tp != '22Y' AND transaction_tp != '24T' AND transaction_dt >= '04/30/2010'  GROUP BY state ORDER BY state) AS totals, political_data.state_conts WHERE state_conts.state = totals.state ORDER BY percent_on_losers DESC";
+      break;
   }
   //console.log(query);
   if(query == null){
